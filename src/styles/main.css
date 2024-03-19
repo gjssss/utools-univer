@@ -1,0 +1,11 @@
+#app{
+  padding: 0;
+  margin: 0;
+  width: 95vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+iframe{
+  display: none !important;
+}
