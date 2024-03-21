@@ -1,5 +1,10 @@
 <script setup lang="ts">
 toggleDark(false)
+// utools.db.put({
+//   _id: 'demo',
+//   data: 'demo',
+// })
+// console.log(utools.db.get('demo'))
 </script>
 
 <template>

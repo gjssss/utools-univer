@@ -38,6 +38,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.9.0
     version: 10.9.0(vue@3.4.21)
+  nanoid:
+    specifier: ^5.0.6
+    version: 5.0.6
   vue:
     specifier: ^3.4.21
     version: 3.4.21(typescript@5.3.3)

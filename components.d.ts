@@ -8,7 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     FileMenu: typeof import('./src/components/FileMenu.vue')['default']
-    HelloVue: typeof import('./src/components/hello-vue.vue')['default']
     UniverSheet: typeof import('./src/components/UniverSheet.vue')['default']
   }
 }
