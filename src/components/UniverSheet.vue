@@ -1,13 +1,36 @@
 <script setup lang="ts">
+import type { Univer } from '@univerjs/core'
+
+const props = defineProps<{
+  id: string
+}>()
+
 const container = ref<HTMLDivElement>()
+
+let univer: Univer | null = null
+
 onMounted(() => {
-  const univer = init({
-    container: container.value,
-    header: true,
-    toolbar: true,
-    footer: true,
+  const closeWatch = watch(() => props.id, () => {
+    if (props.id) {
+      if (univer) {
+        univer.dispose()
+        univer = null
+      }
+      univer = init({
+        container: container.value,
+        header: true,
+        toolbar: true,
+        footer: true,
+      })
+      univer.createUniverSheet({})
+    }
+  }, { immediate: true })
+
+  onUnmounted(() => {
+    closeWatch()
+    if (univer)
+      univer.dispose()
   })
-  univer.createUniverSheet({})
 })
 </script>
 

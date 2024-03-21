@@ -1,6 +1,9 @@
-export function useCatalogue() {
-  const { data, isPedding, refresh } = useData<Category[]>('catalogue', [
+import { nanoid } from 'nanoid'
+
+export async function useCatalogue() {
+  const { data, refresh } = await useData<Category[]>('catalogue', [
     {
+      id: nanoid(),
       name: '未命名',
       files: [],
     },
@@ -11,12 +14,12 @@ export function useCatalogue() {
 
   return {
     data,
-    isPedding,
     refresh,
   }
 }
 
 interface Category {
+  id: string
   name: string
   files: FileItem[]
 }
@@ -24,5 +27,4 @@ interface Category {
 interface FileItem {
   id: string
   name: string
-  content: string
 }
