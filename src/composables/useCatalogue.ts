@@ -1,7 +1,7 @@
 import { nanoid } from 'nanoid'
 
 export async function useCatalogue() {
-  const { data, refresh } = await useData<Category[]>('catalogue', [
+  const { data, refresh, close } = await useData<Category[]>('catalogue', [
     {
       id: nanoid(),
       name: '未命名',
@@ -15,6 +15,7 @@ export async function useCatalogue() {
   return {
     data,
     refresh,
+    close,
   }
 }
 

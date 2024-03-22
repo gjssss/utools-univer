@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const sys = useSystemStore()
 toggleDark(false)
 </script>
 
@@ -13,7 +14,7 @@ toggleDark(false)
           header
         </div>
         <div class="flex-1">
-        <!-- <UniverSheet /> -->
+          <UniverSheet :id="sys.currentFileID" />
         </div>
       </div>
     </main>

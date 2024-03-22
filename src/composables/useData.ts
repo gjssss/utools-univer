@@ -3,6 +3,7 @@ import { hasInjectionContext } from 'vue'
 export async function useData<T>(id: string, initVal: T, transformer: Transformer<T>) {
   const data = ref(initVal) as unknown as Ref<T>
   const rawData = ref() as unknown as Ref<DbDoc>
+  let isClose = false
 
   const _d = await utools.db.promises.get(id)
   if (_d === null) {
@@ -36,13 +37,20 @@ export async function useData<T>(id: string, initVal: T, transformer: Transforme
 
   if (hasInjectionContext()) {
     onUnmounted(() => {
-      close()
+      if (!isClose) {
+        isClose = true
+        close()
+      }
     })
   }
 
   return {
     data,
     refresh,
+    close: () => {
+      isClose = true
+      return close()
+    },
   }
 }
 

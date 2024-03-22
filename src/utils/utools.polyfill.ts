@@ -1,6 +1,10 @@
 // Utools Polyfill File
 // Please Only Run in Development Environment
 
+function deepclone<T extends object>(obj: T): T {
+  return JSON.parse(JSON.stringify(obj))
+}
+
 export function utoolsPolyfill() {
   return {
     db: DB(),
@@ -10,7 +14,7 @@ export function utoolsPolyfill() {
 function DB() {
   const memory = new Map<string, any>()
   function put(data: DbDoc): DbReturn {
-    memory.set(data._id, data)
+    memory.set(data._id, deepclone(data))
     return {
       id: data._id,
       rev: data._rev || '1',
@@ -25,7 +29,7 @@ function DB() {
     if (memory.has(id)) {
       return {
         _id: id,
-        data: memory.get(id).data,
+        data: deepclone(memory.get(id).data),
         _rev: '1',
       }
     }

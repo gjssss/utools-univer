@@ -8,13 +8,14 @@ function addFile(idx: number) {
     name: '文件a',
   })
 }
+const sys = useSystemStore()
 </script>
 
 <template>
   <div class="h-full w-full">
     <div v-for="item, index in data" :key="item.id">
       <div>{{ item.name }}<span @click="addFile(index)">+</span></div>
-      <div v-for="file in item.files" :key="file.id">
+      <div v-for="file in item.files" :key="file.id" @click="sys.currentFileID = file.id">
         {{ file.name }}
       </div>
     </div>
