@@ -6,6 +6,7 @@ export async function useCatalogue() {
       id: nanoid(),
       name: '未命名',
       files: [],
+      isFold: false,
     },
   ], {
     Data2Str: src => JSON.stringify(src),
@@ -22,6 +23,7 @@ export async function useCatalogue() {
 interface Category {
   id: string
   name: string
+  isFold: boolean
   files: FileItem[]
 }
 

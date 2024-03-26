@@ -1,17 +1,18 @@
 <script setup lang="ts">
 const sys = useSystemStore()
 toggleDark(false)
+const toggleMenu = ref(true)
 </script>
 
 <template>
   <Suspense>
-    <main class="h-full w-full flex">
-      <div class="h-full w-10rem flex-shrink-0">
+    <main class="h-full w-full flex overflow-hidden">
+      <div v-show="toggleMenu" class="h-full w-10rem flex-shrink-0">
         <FileMenu />
       </div>
-      <div class="h-full flex flex-1 flex-col">
-        <div class="h-4rem w-full flex-shrink-0">
-          header
+      <div class="h-full w-full flex flex-1 flex-col">
+        <div class="h-2rem w-full flex flex-shrink-0 items-center px-2">
+          <div class="i-carbon-menu" @click="toggleMenu = !toggleMenu" />
         </div>
         <div class="flex-1">
           <UniverSheet :id="sys.currentFileID" />
