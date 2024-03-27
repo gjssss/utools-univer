@@ -6,7 +6,7 @@ const toggleMenu = ref(true)
 
 <template>
   <Suspense>
-    <main class="h-full w-full flex overflow-hidden">
+    <main class="h-full w-full flex overflow-hidden" @contextmenu.prevent="() => {}">
       <div v-show="toggleMenu" class="h-full w-10rem flex-shrink-0">
         <FileMenu />
       </div>
