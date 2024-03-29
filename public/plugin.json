@@ -1,0 +1,11 @@
+{
+  "main": "index.html",
+  "logo": "logo.jpg",
+  "features": [
+    {
+      "code": "univer",
+      "explain": "start univer",
+      "cmds": ["hi"]
+    }
+  ]
+}

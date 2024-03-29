@@ -1,13 +1,12 @@
 <script setup lang="ts">
 const sys = useSystemStore()
-toggleDark(false)
 const toggleMenu = ref(true)
 </script>
 
 <template>
   <Suspense>
     <main class="h-full w-full flex overflow-hidden" @contextmenu.prevent="() => {}">
-      <div v-show="toggleMenu" class="h-full w-10rem flex-shrink-0">
+      <div v-show="toggleMenu" class="h-full min-w-12rem w-12% flex-shrink-0">
         <FileMenu />
       </div>
       <div class="h-full w-full flex flex-1 flex-col">
