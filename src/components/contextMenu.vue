@@ -37,7 +37,7 @@ const styleObj = computed(() => {
       <div
         v-show="val"
         ref="element"
-        class="fixed z-1001 origin-top-left cursor-default overflow-hidden rounded-md bg-white text-0.9rem transition-all dark:bg-#333"
+        class="fixed z-1001 origin-top-left cursor-default overflow-hidden rounded-md bg-white text-0.9rem shadow-lg transition-all dark:bg-#333"
         :style="styleObj"
       >
         <div
