@@ -44,6 +44,7 @@ const styleObj = computed(() => {
           v-for="item in options"
           :key="item.text"
           class="flex cursor-pointer items-center gap-2 px-4 py-1 hover:bg-#eee hover:dark:bg-#444"
+          @click="item.cb"
         >
           <div :class="item.icon" />
           {{ item.text }}

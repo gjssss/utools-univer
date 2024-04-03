@@ -32,6 +32,7 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const defineLoader: typeof import('vue-router/auto')['defineLoader']
   const definePage: typeof import('unplugin-vue-router/runtime')['definePage']
+  const deleteFile: typeof import('./src/composables/file')['deleteFile']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
@@ -88,6 +89,7 @@ declare global {
   const refDefault: typeof import('@vueuse/core')['refDefault']
   const refThrottled: typeof import('@vueuse/core')['refThrottled']
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
+  const renameFile: typeof import('./src/composables/file')['renameFile']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
@@ -336,6 +338,7 @@ declare module 'vue' {
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
+    readonly deleteFile: UnwrapRef<typeof import('./src/composables/file')['deleteFile']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
@@ -389,6 +392,7 @@ declare module 'vue' {
     readonly refDefault: UnwrapRef<typeof import('@vueuse/core')['refDefault']>
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
+    readonly renameFile: UnwrapRef<typeof import('./src/composables/file')['renameFile']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
@@ -624,6 +628,7 @@ declare module '@vue/runtime-core' {
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
+    readonly deleteFile: UnwrapRef<typeof import('./src/composables/file')['deleteFile']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
@@ -677,6 +682,7 @@ declare module '@vue/runtime-core' {
     readonly refDefault: UnwrapRef<typeof import('@vueuse/core')['refDefault']>
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
+    readonly renameFile: UnwrapRef<typeof import('./src/composables/file')['renameFile']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>

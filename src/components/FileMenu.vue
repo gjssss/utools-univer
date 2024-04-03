@@ -24,12 +24,14 @@ const contextMenuOption = computed<ContextMenuListOption>(() => {
       {
         text: '重命名文件',
         icon: 'i-carbon-edit',
-        cb: () => {},
+        cb: () => {
+        },
       },
       {
         text: '删除文件',
         icon: 'i-carbon-trash-can',
-        cb: () => {},
+        cb: () => {
+        },
       },
     ]
   }
