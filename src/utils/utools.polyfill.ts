@@ -40,12 +40,22 @@ function DB() {
   async function aGet(id: string): Promise<DbDoc | null> {
     return get(id)
   }
+  function remove(id: string): DbDoc | null {
+    const doc = get(id)
+    memory.delete(id)
+    return doc
+  }
+  async function aRemove(id: string): Promise<DbDoc | null> {
+    return remove(id)
+  }
   return {
     put,
     get,
+    remove,
     promises: {
       get: aGet,
       put: aPut,
+      remove: aRemove,
     },
   }
 }

@@ -4,18 +4,23 @@ import type { ContextMenuListOption } from '~/types'
 
 type ContextType = 'category' | 'file'
 
+const { data, addCategory, delCategory } = await useCatalogue()
+const sys = useSystemStore()
 const posX = ref(0)
 const posY = ref(0)
 const contextOpen = ref(false)
 const contextType = ref<ContextType>('category')
-const selectIdx = ref(0)
+const categoryIndex = ref(0)
+const fileIndex = ref(0)
 const contextMenuOption = computed<ContextMenuListOption>(() => {
   if (contextType.value === 'category') {
     return [
       {
         text: '删除分类',
         icon: 'i-carbon-trash-can',
-        cb: () => {},
+        cb: () => {
+          delCategory(categoryIndex.value)
+        },
       },
     ]
   }
@@ -25,6 +30,7 @@ const contextMenuOption = computed<ContextMenuListOption>(() => {
         text: '重命名文件',
         icon: 'i-carbon-edit',
         cb: () => {
+          data.value[categoryIndex.value].files[fileIndex.value].name = 'rename'
         },
       },
       {
@@ -37,8 +43,6 @@ const contextMenuOption = computed<ContextMenuListOption>(() => {
   }
 })
 
-const { data } = await useCatalogue()
-
 function addFile(idx: number) {
   data.value[idx].isFold = false
   data.value[idx].files.push({
@@ -46,27 +50,19 @@ function addFile(idx: number) {
     name: '未命名文件',
   })
 }
-const sys = useSystemStore()
 
 function toggleFold(idx: number) {
   data.value[idx].isFold = !data.value[idx].isFold
 }
 
-function addCategory() {
-  data.value.push({
-    id: nanoid(),
-    name: '未命名分类',
-    isFold: false,
-    files: [],
-  })
-}
-
-async function openContextMenu(event: MouseEvent, type: ContextType, idx: number) {
+async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: number, fileIdx?: number) {
   const { clientX, clientY } = event
   posX.value = clientX
   posY.value = clientY
   contextType.value = type
-  selectIdx.value = idx
+  categoryIndex.value = cateIdx
+  if (fileIdx)
+    fileIndex.value = fileIdx
   await nextTick()
   contextOpen.value = true
 }
@@ -101,11 +97,11 @@ async function openContextMenu(event: MouseEvent, type: ContextType, idx: number
         </div>
         <TransitionGroup v-if="!(item.isFold)" tag="div" name="fade-right">
           <div
-            v-for="file, fileIndex in item.files"
+            v-for="file, fIdx in item.files"
             :key="file.id"
             class="py-0.5 pl-4 text-0.9rem hover:bg-#ddd hover:dark:bg-#555"
             @click="sys.currentFileID = file.id"
-            @contextmenu="e => openContextMenu(e, 'file', fileIndex)"
+            @contextmenu="e => openContextMenu(e, 'file', index, fIdx)"
           >
             {{ file.name }}
           </div>
