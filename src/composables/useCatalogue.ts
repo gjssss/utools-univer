@@ -25,7 +25,9 @@ export async function useCatalogue() {
   }
 
   function delCategory(idx: number) {
-    data.value.splice(idx, 1)
+    const files = data.value[idx].files
+    const promises = files.map(file => deleteFile(file.id))
+    Promise.all(promises).then(() => data.value.splice(idx, 1)).catch(console.error)
   }
 
   return {
