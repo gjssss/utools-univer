@@ -37,6 +37,8 @@ const contextMenuOption = computed<ContextMenuListOption>(() => {
         text: '删除文件',
         icon: 'i-carbon-trash-can',
         cb: () => {
+          const idx = data.value[categoryIndex.value].files[fileIndex.value].id
+          deleteFile(idx).then(() => data.value[categoryIndex.value].files.splice(fileIndex.value, 1))
         },
       },
     ]

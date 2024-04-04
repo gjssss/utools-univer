@@ -11,3 +11,10 @@ export async function setFile(id: string, content: object) {
     data: JSON.stringify(content),
   })
 }
+
+export async function deleteFile(id: string) {
+  if (id)
+    await utools.db.promises.remove(id)
+  else
+    console.error('file not found')
+}

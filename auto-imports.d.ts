@@ -32,7 +32,7 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const defineLoader: typeof import('vue-router/auto')['defineLoader']
   const definePage: typeof import('unplugin-vue-router/runtime')['definePage']
-  const deleteFile: typeof import('./src/composables/file')['deleteFile']
+  const deleteFile: typeof import('./src/utils/file')['deleteFile']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
@@ -338,7 +338,7 @@ declare module 'vue' {
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
-    readonly deleteFile: UnwrapRef<typeof import('./src/composables/file')['deleteFile']>
+    readonly deleteFile: UnwrapRef<typeof import('./src/utils/file')['deleteFile']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
@@ -628,7 +628,7 @@ declare module '@vue/runtime-core' {
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
-    readonly deleteFile: UnwrapRef<typeof import('./src/composables/file')['deleteFile']>
+    readonly deleteFile: UnwrapRef<typeof import('./src/utils/file')['deleteFile']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>

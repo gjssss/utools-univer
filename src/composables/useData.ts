@@ -7,11 +7,12 @@ export async function useData<T>(id: string, initVal: T, transformer: Transforme
 
   const _d = await utools.db.promises.get(id)
   if (_d === null) {
-    // New Data Set
+    // create a new doc
     await utools.db.promises.put({
       _id: id,
       data: transformer.Data2Str(initVal),
     })
+    // equipped the new doc to rawData
     rawData.value = await utools.db.promises.get(id) as DbDoc
   }
   else {
