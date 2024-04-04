@@ -36,7 +36,8 @@ const contextMenuOption = computed<ContextMenuListOption>(() => {
       {
         text: '删除文件',
         icon: 'i-carbon-trash-can',
-        cb: () => {},
+        cb: () => {
+        },
       },
     ]
   }
