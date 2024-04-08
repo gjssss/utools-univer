@@ -9,6 +9,7 @@ const sys = useSystemStore()
 const posX = ref(0)
 const posY = ref(0)
 const contextOpen = ref(false)
+const modalOpen = ref(false)
 const contextType = ref<ContextType>('category')
 const categoryIndex = ref(0)
 const fileIndex = ref(0)
@@ -30,7 +31,8 @@ const contextMenuOption = computed<ContextMenuListOption>(() => {
         text: '重命名文件',
         icon: 'i-carbon-edit',
         cb: () => {
-          data.value[categoryIndex.value].files[fileIndex.value].name = 'rename'
+          // data.value[categoryIndex.value].files[fileIndex.value].name = 'rename'
+          modalOpen.value = true
         },
       },
       {
@@ -71,7 +73,7 @@ async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: nu
 </script>
 
 <template>
-  <div class="h-full w-full flex flex-col cursor-default bg-#eee dark:bg-#222">
+  <div class="h-full w-full flex flex-col cursor-default bg-1">
     <div class="none-scroller w-full flex-1 overflow-x-hidden" :class="contextOpen ? 'of-hidden' : 'overflow-y-auto'">
       <div v-for="item, index in data" :key="item.id">
         <div
@@ -86,7 +88,7 @@ async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: nu
           <div class="text-#888 transition-opacity">
             {{ item.files.length }}
           </div>
-          <div class="category-control absolute right-0 flex gap-1 bg-#eee px-2 op-0 transition-opacity dark:bg-#222">
+          <div class="category-control absolute right-0 flex gap-1 px-2 op-0 transition-opacity bg-1">
             <div
               class="i-carbon-add-alt cursor-pointer hover:text-blue-700"
               @click.stop="addFile(index)"
@@ -101,7 +103,7 @@ async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: nu
           <div
             v-for="file, fIdx in item.files"
             :key="file.id"
-            class="py-0.5 pl-4 text-0.9rem hover:bg-#ddd hover:dark:bg-#555"
+            class="py-0.5 pl-4 text-0.9rem hover:bg-2"
             @click="sys.currentFileID = file.id"
             @contextmenu="e => openContextMenu(e, 'file', index, fIdx)"
           >
@@ -110,10 +112,16 @@ async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: nu
         </TransitionGroup>
       </div>
     </div>
-    <div class="cursor-pointer py-1 text-center transition-all hover:bg-#ddd hover:dark:bg-#555" @click="addCategory()">
+    <div class="cursor-pointer py-1 text-center transition-all hover:bg-4" @click="addCategory()">
       新建分类
     </div>
     <ContextMenu v-model:value="contextOpen" :x="posX" :y="posY" :options="contextMenuOption" />
+    <Modal v-model:value="modalOpen">
+      <div class="h-6rem w-20rem flex-center gap-2 rounded-lg shadow-lg bg-1">
+        <div>文件名</div>
+        <input>
+      </div>
+    </Modal>
   </div>
 </template>
 

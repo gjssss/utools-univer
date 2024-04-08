@@ -9,3 +9,17 @@
 html.dark .univer-theme {
   color: black;
 }
+
+.fade-down-enter-from,
+.fade-down-leave-to {
+  opacity: 0;
+  transform: translateY(-20px) scaleX(0.01);
+}
+
+input {
+  background-color: transparent;
+  border-bottom: 1px dashed #111;
+}
+html.dark input {
+  border-bottom: 1px dashed #eee;
+}

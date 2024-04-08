@@ -42,13 +42,13 @@ function clickHandle(cb: Function) {
       <div
         v-show="val"
         ref="element"
-        class="fixed z-1001 origin-top-left cursor-default overflow-hidden rounded-md bg-white text-0.9rem shadow-lg transition-all dark:bg-#333"
+        class="fixed z-1001 origin-top-left cursor-default overflow-hidden rounded-md text-0.9rem shadow-lg transition-all bg-base"
         :style="styleObj"
       >
         <div
           v-for="item in options"
           :key="item.text"
-          class="flex cursor-pointer items-center gap-2 px-4 py-1 hover:bg-#eee hover:dark:bg-#444"
+          class="flex cursor-pointer items-center gap-2 px-4 py-1 hover:bg-select"
           @click="clickHandle(item.cb)"
         >
           <div :class="item.icon" />
@@ -60,9 +60,5 @@ function clickHandle(cb: Function) {
 </template>
 
 <style>
-.fade-down-enter-from,
-.fade-down-leave-to {
-  opacity: 0;
-  transform: translateY(-20px) scaleX(0.01);
-}
+
 </style>
