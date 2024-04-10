@@ -13,6 +13,8 @@ const modalOpen = ref(false)
 const contextType = ref<ContextType>('category')
 const categoryIndex = ref(0)
 const fileIndex = ref(0)
+const tempFileName = ref('')
+const renameInput = ref<HTMLInputElement>()
 const contextMenuOption = computed<ContextMenuListOption>(() => {
   if (contextType.value === 'category') {
     return [
@@ -30,17 +32,20 @@ const contextMenuOption = computed<ContextMenuListOption>(() => {
       {
         text: '重命名文件',
         icon: 'i-carbon-edit',
-        cb: () => {
-          // data.value[categoryIndex.value].files[fileIndex.value].name = 'rename'
+        cb: async () => {
+          tempFileName.value = data.value[categoryIndex.value].files[fileIndex.value].name
           modalOpen.value = true
+          await nextTick()
+          renameInput.value?.focus()
         },
       },
       {
         text: '删除文件',
         icon: 'i-carbon-trash-can',
-        cb: () => {
+        cb: async () => {
           const idx = data.value[categoryIndex.value].files[fileIndex.value].id
-          deleteFile(idx).then(() => data.value[categoryIndex.value].files.splice(fileIndex.value, 1))
+          await deleteFile(idx)
+          data.value[categoryIndex.value].files.splice(fileIndex.value, 1)
         },
       },
     ]
@@ -69,6 +74,11 @@ async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: nu
     fileIndex.value = fileIdx
   await nextTick()
   contextOpen.value = true
+}
+
+function confirmRenameFile() {
+  data.value[categoryIndex.value].files[fileIndex.value].name = tempFileName.value
+  modalOpen.value = false
 }
 </script>
 
@@ -118,12 +128,14 @@ async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: nu
     <ContextMenu v-model:value="contextOpen" :x="posX" :y="posY" :options="contextMenuOption" />
     <Modal v-model:value="modalOpen">
       <div class="h-8rem w-20rem flex-center flex-col gap-4 rounded-lg px-2rem shadow-lg bg-1">
-        <div class="flex gap-2">
+        <div class="flex gap-4">
           <div>文件名</div>
-          <input>
+          <input ref="renameInput" v-model="tempFileName" @keyup.enter="confirmRenameFile">
         </div>
         <div class="w-full flex justify-end">
-          <UButton>确认</UButton>
+          <UButton @click="confirmRenameFile">
+            确认
+          </UButton>
         </div>
       </div>
     </Modal>
