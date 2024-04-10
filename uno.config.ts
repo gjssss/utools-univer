@@ -16,9 +16,13 @@ export default defineConfig({
       'bg-2': 'bg-#ddd dark:bg-#333',
       'bg-3': 'bg-#ccc dark:bg-#444',
       'bg-4': 'bg-#bbb dark:bg-#555',
+      'b-c': 'b-#555 dark:b-#aaa',
     },
     {
       'flex-center': 'flex items-center justify-center',
+    },
+    {
+      button: 'b-c cursor-pointer b px-3 py-0.25 rounded-lg hover:bg-#888 transition-all',
     },
   ],
   rules: [

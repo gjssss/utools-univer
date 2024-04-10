@@ -117,9 +117,14 @@ async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: nu
     </div>
     <ContextMenu v-model:value="contextOpen" :x="posX" :y="posY" :options="contextMenuOption" />
     <Modal v-model:value="modalOpen">
-      <div class="h-6rem w-20rem flex-center gap-2 rounded-lg shadow-lg bg-1">
-        <div>文件名</div>
-        <input>
+      <div class="h-8rem w-20rem flex-center flex-col gap-4 rounded-lg px-2rem shadow-lg bg-1">
+        <div class="flex gap-2">
+          <div>文件名</div>
+          <input>
+        </div>
+        <div class="w-full flex justify-end">
+          <UButton>确认</UButton>
+        </div>
       </div>
     </Modal>
   </div>
