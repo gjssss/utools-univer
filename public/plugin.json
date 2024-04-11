@@ -1,11 +1,20 @@
 {
   "main": "index.html",
+  "preload": "preload.js",
+  "platform": [
+    "win32",
+    "darwin",
+    "linux"
+  ],
   "logo": "logo.jpg",
   "features": [
     {
       "code": "univer",
       "explain": "start univer",
-      "cmds": ["hi"]
+      "cmds": [
+        "univer",
+        "sheet"
+      ]
     }
   ]
 }

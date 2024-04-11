@@ -10,19 +10,36 @@ const posX = ref(0)
 const posY = ref(0)
 const contextOpen = ref(false)
 const modalOpen = ref(false)
+const delNoticeOpen = ref(false)
 const contextType = ref<ContextType>('category')
 const categoryIndex = ref(0)
 const fileIndex = ref(0)
 const tempFileName = ref('')
 const renameInput = ref<HTMLInputElement>()
+let delCb = () => {}
 const contextMenuOption = computed<ContextMenuListOption>(() => {
   if (contextType.value === 'category') {
     return [
       {
+        text: '重命名分类',
+        icon: 'i-carbon-edit',
+        cb: async () => {
+          tempFileName.value = data.value[categoryIndex.value].name
+          modalOpen.value = true
+          await nextTick()
+          renameInput.value?.focus()
+        },
+      },
+      {
         text: '删除分类',
         icon: 'i-carbon-trash-can',
         cb: () => {
-          delCategory(categoryIndex.value)
+          delNoticeOpen.value = true
+
+          delCb = () => {
+            delCategory(categoryIndex.value)
+            delNoticeOpen.value = false
+          }
         },
       },
     ]
@@ -42,10 +59,14 @@ const contextMenuOption = computed<ContextMenuListOption>(() => {
       {
         text: '删除文件',
         icon: 'i-carbon-trash-can',
-        cb: async () => {
-          const idx = data.value[categoryIndex.value].files[fileIndex.value].id
-          await deleteFile(idx)
-          data.value[categoryIndex.value].files.splice(fileIndex.value, 1)
+        cb: () => {
+          delNoticeOpen.value = true
+          delCb = async () => {
+            const idx = data.value[categoryIndex.value].files[fileIndex.value].id
+            await deleteFile(idx)
+            data.value[categoryIndex.value].files.splice(fileIndex.value, 1)
+            delNoticeOpen.value = false
+          }
         },
       },
     ]
@@ -77,7 +98,10 @@ async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: nu
 }
 
 function confirmRenameFile() {
-  data.value[categoryIndex.value].files[fileIndex.value].name = tempFileName.value
+  if (contextType.value === 'category')
+    data.value[categoryIndex.value].name = tempFileName.value
+  else
+    data.value[categoryIndex.value].files[fileIndex.value].name = tempFileName.value
   modalOpen.value = false
 }
 </script>
@@ -129,12 +153,27 @@ function confirmRenameFile() {
     <Modal v-model:value="modalOpen">
       <div class="h-8rem w-20rem flex-center flex-col gap-4 rounded-lg px-2rem shadow-lg bg-1">
         <div class="flex gap-4">
-          <div>文件名</div>
+          <div>名称</div>
           <input ref="renameInput" v-model="tempFileName" @keyup.enter="confirmRenameFile">
         </div>
         <div class="w-full flex justify-end">
           <UButton @click="confirmRenameFile">
             确认
+          </UButton>
+        </div>
+      </div>
+    </Modal>
+    <Modal v-model:value="delNoticeOpen">
+      <div class="h-8rem w-20rem flex-center flex-col gap-4 rounded-lg px-2rem shadow-lg bg-1">
+        <div class="text-1.1rem">
+          确认要删除吗？
+        </div>
+        <div class="w-full flex justify-end gap-4">
+          <UButton @click="delCb">
+            确认
+          </UButton>
+          <UButton @click="delNoticeOpen = false">
+            取消
           </UButton>
         </div>
       </div>
