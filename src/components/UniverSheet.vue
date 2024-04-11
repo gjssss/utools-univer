@@ -39,8 +39,8 @@ onMounted(() => {
 
 <template>
   <div ref="container" class="univer-container">
-    <div v-if="!id">
-      Please Select File
+    <div v-if="!id" class="h-full flex-center text-1.2rem">
+      请选择文件
     </div>
   </div>
 </template>
