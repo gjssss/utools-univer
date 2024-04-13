@@ -1,4 +1,4 @@
-name: Release Obsidian plugin
+name: Release Utools plugin
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - '*'
 
 env:
-  PLUGIN_NAME: obsidian-univer
+  PLUGIN_NAME: utools-univer
 
 jobs:
   build:
