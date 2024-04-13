@@ -1,0 +1,74 @@
+name: Release Obsidian plugin
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  PLUGIN_NAME: obsidian-univer
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: Build
+        id: build
+        run: |
+          npm install
+          npm run build
+          mkdir ${{ env.PLUGIN_NAME }}
+          echo "Waiting for build files..."
+          while [ ! -f dist/main.js ] || [ ! -f dist/manifest.json ] || [ ! -f dist/styles.css ]; do
+            echo "Still waiting for build files..."
+            sleep 1
+          done
+          echo "All build files are ready."
+
+      - name: Get latest release upload URL
+        id: get_latest_release
+        run: |
+          upload_url=$(gh release view --json uploadUrl -q .uploadUrl)
+          echo "::set-output name=upload_url::$upload_url"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload payload.js
+        id: upload-payload
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_latest_release.outputs.upload_url }}
+          asset_path: ./dist/payload.js
+          asset_name: payload.js
+          asset_content_type: text/javascript
+
+      - name: Upload plugin.json
+        id: upload-plugin
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_latest_release.outputs.upload_url }}
+          asset_path: ./dist/plugin.json
+          asset_name: plugin.json
+          asset_content_type: application/json
+
+      - name: Upload index.htnl
+        id: upload-index
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.get_latest_release.outputs.upload_url }}
+          asset_path: ./dist/index.html
+          asset_name: index.html
+          asset_content_type: text/html

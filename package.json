@@ -1,7 +1,9 @@
 {
   "type": "module",
+  "version": "0.0.1",
   "private": true,
   "packageManager": "pnpm@8.15.4",
+  "license": "MIT",
   "scripts": {
     "build": "vite build",
     "dev": "vite --port 3333 --open",
@@ -10,7 +12,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "up": "taze major -I",
-    "postinstall": "npx simple-git-hooks"
+    "postinstall": "npx simple-git-hooks",
+    "release": "release-it"
   },
   "dependencies": {
     "@univerjs/core": "^0.1.6",
@@ -30,6 +33,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.4",
     "@iconify-json/carbon": "^1.1.30",
+    "@release-it/conventional-changelog": "^8.0.1",
     "@types/node": "^20.11.23",
     "@unocss/eslint-config": "^0.58.5",
     "@unocss/eslint-plugin": "^0.58.5",
@@ -42,6 +46,7 @@
     "jsdom": "^24.0.0",
     "lint-staged": "^15.2.2",
     "pnpm": "^8.15.4",
+    "release-it": "^17.2.0",
     "simple-git-hooks": "^2.9.0",
     "taze": "^0.13.3",
     "typescript": "^5.3.3",
