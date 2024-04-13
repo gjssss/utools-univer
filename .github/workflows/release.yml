@@ -26,7 +26,7 @@ jobs:
           npm run build
           mkdir ${{ env.PLUGIN_NAME }}
           echo "Waiting for build files..."
-          while [ ! -f dist/main.js ] || [ ! -f dist/manifest.json ] || [ ! -f dist/styles.css ]; do
+          while [ ! -f dist/preload.js ] || [ ! -f dist/plugin.json ] || [ ! -f dist/index.html ]; do
             echo "Still waiting for build files..."
             sleep 1
           done
@@ -40,15 +40,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload payload.js
-        id: upload-payload
+      - name: Upload preload.js
+        id: upload-preload
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_latest_release.outputs.upload_url }}
-          asset_path: ./dist/payload.js
-          asset_name: payload.js
+          asset_path: ./dist/preload.js
+          asset_name: preload.js
           asset_content_type: text/javascript
 
       - name: Upload plugin.json
