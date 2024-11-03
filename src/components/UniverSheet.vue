@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import type { IWorkbookData, Univer, Workbook } from '@univerjs/core'
+import type { IWorkbookData } from '@univerjs/core'
+import type { FWorkbook } from '@univerjs/facade'
+import { FUniver } from '@univerjs/facade'
 
 const props = defineProps<{
   id: string
@@ -7,32 +9,35 @@ const props = defineProps<{
 
 const container = ref<HTMLDivElement>()
 
-let univer: Univer | null = null
-let workbook: Workbook | null = null
+let univerAPI: FUniver | null = null
+let workbook: FWorkbook | null = null
 
 onMounted(() => {
   const closeWatch = watch(() => props.id, async (newVal, oldVal) => {
     if (newVal) {
-      if (univer) {
-        await setFile(oldVal, workbook?.save() ?? {})
-        univer.dispose()
-        univer = null
+      if (univerAPI && workbook) {
+        await setFile(oldVal, workbook.save() ?? {})
+        const unitId = workbook.getId()
+        if (unitId)
+          univerAPI.disposeUnit(unitId)
+        univerAPI = null
         workbook = null
       }
-      univer = init({
+      const univer = init({
         container: container.value,
-        header: true,
-        toolbar: true,
-        footer: true,
       })
-      workbook = univer.createUniverSheet(await getFile<Partial<IWorkbookData>>(newVal, {}))
+      univerAPI = FUniver.newAPI(univer)
+      workbook = univerAPI.createUniverSheet(await getFile<Partial<IWorkbookData>>(newVal, {}))
     }
   })
 
   onUnmounted(() => {
     closeWatch()
-    if (univer)
-      univer.dispose()
+    if (univerAPI && workbook) {
+      const unitId = workbook.getId()
+      if (unitId)
+        univerAPI.disposeUnit(unitId)
+    }
   })
 })
 </script>
