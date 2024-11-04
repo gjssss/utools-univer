@@ -30,7 +30,7 @@ const styleObj = computed(() => {
   }
 })
 
-function clickHandle(cb: Function) {
+function clickHandle(cb: () => void) {
   cb()
   val.value = false
 }
@@ -40,16 +40,13 @@ function clickHandle(cb: Function) {
   <Teleport to="body">
     <Transition name="fade-down">
       <div
-        v-show="val"
-        ref="element"
+        v-show="val" ref="element"
         class="fixed z-1001 origin-top-left cursor-default overflow-hidden rounded-md text-0.9rem shadow-lg transition-all bg-base"
         :style="styleObj"
       >
         <div
-          v-for="item in options"
-          :key="item.text"
-          class="flex cursor-pointer items-center gap-2 px-4 py-1 hover:bg-select"
-          @click="clickHandle(item.cb)"
+          v-for="item in options" :key="item.text"
+          class="flex cursor-pointer items-center gap-2 px-4 py-1 hover:bg-select" @click="clickHandle(item.cb)"
         >
           <div :class="item.icon" />
           {{ item.text }}
@@ -59,6 +56,4 @@ function clickHandle(cb: Function) {
   </Teleport>
 </template>
 
-<style>
-
-</style>
+<style></style>
