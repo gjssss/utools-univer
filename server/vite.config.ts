@@ -1,5 +1,6 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 function addFooter(footerText: string) {
   return {
@@ -17,6 +18,11 @@ function addFooter(footerText: string) {
 export default defineConfig({
   plugins: [
     addFooter('window.server = server\n'),
+    dts({
+      outDir: 'dist/types', // 类型文件输出路径
+      include: 'src/**/*.ts',
+      insertTypesEntry: true, // 生成类型入口文件
+    }),
   ],
   build: {
     lib: {
