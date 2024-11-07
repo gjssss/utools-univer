@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import type { IWorkbookData } from '@univerjs/core'
-import type { FWorkbook } from '@univerjs/facade'
+import type { IDocumentData } from '@univerjs/core'
+import type { FDocument } from '@univerjs/facade/lib/types/apis/docs/f-document.js'
 import { FUniver } from '@univerjs/facade'
-import { sheetInit } from '~/services/sheets/uSheet'
+import { docInit } from '~/services/docs/uDoc'
 
 const props = defineProps<{
   id: string
 }>()
 
-const container = ref<HTMLDivElement>()
+const docContainer = ref<HTMLDivElement>()
 
 let univerAPI: FUniver | null = null
-let workbook: FWorkbook | null = null
+let workbook: FDocument | null = null
 
 onMounted(() => {
   const closeWatch = watch(() => props.id, async (newVal, oldVal) => {
     if (newVal) {
       if (univerAPI && workbook) {
-        await setFile(oldVal, workbook.save() ?? {})
+        await setFile(oldVal, workbook.getSnapshot() ?? {})
         const unitId = workbook.getId()
         if (unitId)
           univerAPI.disposeUnit(unitId)
         univerAPI = null
         workbook = null
       }
-      const univer = sheetInit({
-        container: container.value,
+      const univer = docInit({
+        container: docContainer.value,
       })
       univerAPI = FUniver.newAPI(univer)
-      workbook = univerAPI.createUniverSheet(await getFile<Partial<IWorkbookData>>(newVal, {}))
+      workbook = univerAPI.createUniverDoc(await getFile<Partial<IDocumentData>>(newVal, {}))
     }
   })
 
@@ -44,7 +44,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="container" class="univer-container">
+  <div ref="docContainer" class="univer-doc-container">
     <div v-if="!id" class="h-full flex-center text-1.2rem">
       请选择文件
     </div>
@@ -52,7 +52,7 @@ onMounted(() => {
 </template>
 
 <style>
-.univer-container {
+.univer-doc-container {
   height: 100%;
   overflow: hidden;
 }
