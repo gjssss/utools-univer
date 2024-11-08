@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { nanoid } from 'nanoid'
+import { FileType } from '~/composables/store'
+import type { FileItem } from '~/composables/useCatalogue'
 import type { ContextMenuListOption } from '~/types'
 
 type ContextType = 'category' | 'file'
@@ -16,6 +18,7 @@ const categoryIndex = ref(0)
 const fileIndex = ref(0)
 const tempFileName = ref('')
 const renameInput = ref<HTMLInputElement>()
+const typeSelectVisible = ref(false)
 let delCb = () => {}
 const contextMenuOption = computed<ContextMenuListOption>(() => {
   if (contextType.value === 'category') {
@@ -74,11 +77,18 @@ const contextMenuOption = computed<ContextMenuListOption>(() => {
 })
 
 function addFile(idx: number) {
-  data.value[idx].isFold = false
-  data.value[idx].files.push({
+  categoryIndex.value = idx
+  typeSelectVisible.value = true
+}
+
+function createFile(type: FileType) {
+  data.value[categoryIndex.value].isFold = false
+  data.value[categoryIndex.value].files.push({
     id: nanoid(),
-    name: '未命名文件',
+    name: String(+new Date()),
+    type,
   })
+  typeSelectVisible.value = false
 }
 
 function toggleFold(idx: number) {
@@ -95,6 +105,11 @@ async function openContextMenu(event: MouseEvent, type: ContextType, cateIdx: nu
     fileIndex.value = fileIdx
   await nextTick()
   contextOpen.value = true
+}
+
+function updateFile(file: FileItem) {
+  sys.currentFileID = file.id
+  sys.fileType = file.type
 }
 
 function confirmRenameFile() {
@@ -138,7 +153,7 @@ function confirmRenameFile() {
             v-for="file, fIdx in item.files"
             :key="file.id"
             class="py-0.5 pl-4 text-0.9rem hover:bg-2"
-            @click="sys.currentFileID = file.id"
+            @click="updateFile(file)"
             @contextmenu="e => openContextMenu(e, 'file', index, fIdx)"
           >
             {{ file.name }}
@@ -149,6 +164,20 @@ function confirmRenameFile() {
     <div class="cursor-pointer py-1 text-center transition-all hover:bg-4" @click="addCategory()">
       新建分类
     </div>
+    <!-- 类型选择 -->
+    <Modal v-model:value="typeSelectVisible">
+      <div class="h-8rem w-20rem flex-center flex-col gap-4 rounded-lg px-2rem shadow-lg bg-1">
+        <div>选择文件类型</div>
+        <div class="flex gap-4">
+          <UButton @click="createFile(FileType.Doc)">
+            文档
+          </UButton>
+          <UButton @click="createFile(FileType.Sheet)">
+            表格
+          </UButton>
+        </div>
+      </div>
+    </Modal>
     <ContextMenu v-model:value="contextOpen" :x="posX" :y="posY" :options="contextMenuOption" />
     <Modal v-model:value="modalOpen">
       <div class="h-8rem w-20rem flex-center flex-col gap-4 rounded-lg px-2rem shadow-lg bg-1">

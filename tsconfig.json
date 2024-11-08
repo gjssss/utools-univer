@@ -2,12 +2,13 @@
   "compilerOptions": {
     "target": "es2017",
     "jsx": "preserve",
-    "lib": ["DOM", "ESNext"],
+    "lib": ["DOM", "ESNext", "WebWorker"],
     "baseUrl": ".",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["src/*"],
+      "@/*": ["src/*"]
     },
     "resolveJsonModule": true,
     "types": [

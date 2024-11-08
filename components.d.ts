@@ -11,6 +11,7 @@ declare module 'vue' {
     FileMenu: typeof import('./src/components/FileMenu.vue')['default']
     Modal: typeof import('./src/components/Modal.vue')['default']
     UButton: typeof import('./src/components/UButton.vue')['default']
+    UniverDoc: typeof import('./src/components/UniverDoc.vue')['default']
     UniverSheet: typeof import('./src/components/UniverSheet.vue')['default']
   }
 }

@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 
 import path from 'node:path'
+import { univerPlugin } from '@univerjs/vite-plugin'
 import Vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -14,6 +15,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
+      '@/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
   plugins: [
@@ -28,6 +30,7 @@ export default defineConfig({
             defineModel: true,
           },
         }),
+
       },
     }),
 
@@ -53,6 +56,8 @@ export default defineConfig({
     // https://github.com/antfu/unocss
     // see uno.config.ts for config
     UnoCSS(),
+    // univer plugin for css & i18n
+    univerPlugin(),
   ],
 
   // https://github.com/vitest-dev/vitest

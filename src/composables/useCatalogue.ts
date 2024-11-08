@@ -1,3 +1,4 @@
+import type { FileType } from './store'
 import { nanoid } from 'nanoid'
 
 export async function useCatalogue() {
@@ -46,7 +47,8 @@ interface Category {
   files: FileItem[]
 }
 
-interface FileItem {
+export interface FileItem {
   id: string
   name: string
+  type: FileType
 }
