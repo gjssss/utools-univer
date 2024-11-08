@@ -17,7 +17,7 @@ onMounted(() => {
   const closeWatch = watch(() => props.id, async (newVal, oldVal) => {
     if (newVal) {
       if (univerAPI && workbook) {
-        await setFile(oldVal, workbook.getSnapshot() ?? {})
+        await setFile(oldVal!, workbook.getSnapshot() ?? {})
         const unitId = workbook.getId()
         if (unitId)
           univerAPI.disposeUnit(unitId)
@@ -30,6 +30,8 @@ onMounted(() => {
       univerAPI = FUniver.newAPI(univer)
       workbook = univerAPI.createUniverDoc(await getFile<Partial<IDocumentData>>(newVal, {}))
     }
+  }, {
+    immediate: true,
   })
 
   onUnmounted(() => {

@@ -39,7 +39,7 @@ const currentComponent = computed(() => componentMap[currentComponentName.value]
           <!-- TODO:添加i18n选项 -->
         </div>
         <div class="flex-1">
-          <component :is="currentComponent" :id="sys.currentFileID" :key="sys.currentFileID" />
+          <component :is="currentComponent" :id="sys.currentFileID" />
         </div>
       </div>
     </main>
