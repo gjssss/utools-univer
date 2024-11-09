@@ -1,5 +1,5 @@
 import type { Nullable } from '@univerjs/core'
-import type { IUniverRPCMainThreadConfig } from '@univerjs/rpc'
+// import type { IUniverRPCMainThreadConfig } from '@univerjs/rpc'
 import type { IThreadCommentMentionDataSource } from '@univerjs/thread-comment-ui'
 import type { IUniverUIConfig } from '@univerjs/ui'
 import { univerLocales } from '@/locales'
@@ -11,7 +11,7 @@ import { UniverFormulaEnginePlugin } from '@univerjs/engine-formula'
 import { UniverRenderEnginePlugin } from '@univerjs/engine-render'
 
 import { FUniver } from '@univerjs/facade'
-import { UniverRPCMainThreadPlugin } from '@univerjs/rpc'
+// import { UniverRPCMainThreadPlugin } from '@univerjs/rpc'
 import { UniverSheetsPlugin } from '@univerjs/sheets'
 import { UniverSheetsConditionalFormattingPlugin } from '@univerjs/sheets-conditional-formatting'
 import { UniverSheetsConditionalFormattingUIPlugin } from '@univerjs/sheets-conditional-formatting-ui'
@@ -35,9 +35,9 @@ export function sheetInit(option: IUniverUIConfig) {
     locales: univerLocales,
   })
 
-  univer.registerPlugin(UniverRPCMainThreadPlugin, {
-    workerURL: new Worker(new URL('./worker.js', import.meta.url), { type: 'module' }),
-  } as IUniverRPCMainThreadConfig)
+  // univer.registerPlugin(UniverRPCMainThreadPlugin, {
+  //   workerURL: new Worker(new URL('./worker.ts', import.meta.url), { type: 'module' }),
+  // } as IUniverRPCMainThreadConfig)
 
   univer.registerPlugin(UniverDocsPlugin)
   univer.registerPlugin(UniverRenderEnginePlugin)

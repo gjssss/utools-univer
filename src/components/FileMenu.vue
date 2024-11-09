@@ -85,7 +85,7 @@ function createFile(type: FileType) {
   data.value[categoryIndex.value].isFold = false
   data.value[categoryIndex.value].files.push({
     id: nanoid(),
-    name: String(+new Date()),
+    name: `未命名${type === 'sheet' ? '表格' : '文档'}`,
     type,
   })
   typeSelectVisible.value = false
