@@ -13,7 +13,7 @@ The project is in the development stage. 🚧🚧🚧
 4. Launch the Plugin
    Once the plugin is installed, you can use it by opening uTools. Type the keyword "univer" in the uTools search bar, and the uTools-Univer plugin will appear. Click on it to launch the plugin and start using it.
 5. ScreenShots
-   ![img](./public/images/utools-univer.gif)
+   ![img](./images/utools-univer.gif)
 
 ## ✨ Features
 
@@ -35,7 +35,7 @@ The project is in the development stage. 🚧🚧🚧
 - **Cross-highlighting**: Highlight related cells across the sheet.
 - **Pivot Tables**: Summarize and analyze data with pivot tables.
 
-  ![img](./public/images/uSheets.gif)
+  ![img](./images/uSheets.gif)
 
 ### 📝 Univer Doc
 
@@ -46,7 +46,7 @@ The project is in the development stage. 🚧🚧🚧
 - **Headers & Footers**: Add headers and footers to documents.
 - **Comments**: Add comments for additional information.
 
-![img](./public/images/uDoc.gif)
+![img](./images/uDoc.gif)
 
 ### 🗂️ Virtual File System in uTools DB
 
@@ -54,4 +54,4 @@ The project is in the development stage. 🚧🚧🚧
 - **File Management**: Add, rename, move, and delete files within the virtual system.
 - **Organized Workspace**: Keep your projects and related files neatly arranged for easier navigation.
 
-  ![img](./public/images/uManager.gif)
+  ![img](./images/uManager.gif)
