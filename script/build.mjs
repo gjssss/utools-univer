@@ -5,7 +5,7 @@ import { copy } from 'fs-extra'
 import { $, cd, echo } from 'zx'
 
 echo('building web...')
-await $`pnpm vite build`
+await $`pnpm vite build --mode utools`
 echo('building server...')
 cd('server')
 await $`pnpm vite build`
