@@ -165,7 +165,7 @@ function confirmRenameFile() {
       新建分类
     </div>
     <!-- 类型选择 -->
-    <Modal v-model:value="typeSelectVisible">
+    <UModal v-model:value="typeSelectVisible">
       <div class="h-8rem w-20rem flex-center flex-col gap-4 rounded-lg px-2rem shadow-lg bg-1">
         <div>选择文件类型</div>
         <div class="flex gap-4">
@@ -177,9 +177,9 @@ function confirmRenameFile() {
           </UButton>
         </div>
       </div>
-    </Modal>
+    </UModal>
     <ContextMenu v-model:value="contextOpen" :x="posX" :y="posY" :options="contextMenuOption" />
-    <Modal v-model:value="modalOpen">
+    <UModal v-model:value="modalOpen">
       <div class="h-8rem w-20rem flex-center flex-col gap-4 rounded-lg px-2rem shadow-lg bg-1">
         <div class="flex gap-4">
           <div>名称</div>
@@ -191,8 +191,8 @@ function confirmRenameFile() {
           </UButton>
         </div>
       </div>
-    </Modal>
-    <Modal v-model:value="delNoticeOpen">
+    </UModal>
+    <UModal v-model:value="delNoticeOpen">
       <div class="h-8rem w-20rem flex-center flex-col gap-4 rounded-lg px-2rem shadow-lg bg-1">
         <div class="text-1.1rem">
           确认要删除吗？
@@ -206,7 +206,7 @@ function confirmRenameFile() {
           </UButton>
         </div>
       </div>
-    </Modal>
+    </UModal>
   </div>
 </template>
 
