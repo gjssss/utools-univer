@@ -1,39 +1,30 @@
 import type { IUniverUIConfig } from '@univerjs/ui'
 import { univerLocales } from '@/locales'
 import { LocaleType, Univer, UserManagerService } from '@univerjs/core'
-import { UniverDataValidationPlugin } from '@univerjs/data-validation'
 import { defaultTheme } from '@univerjs/design'
 import { UniverDocsPlugin } from '@univerjs/docs'
 import { UniverDocsUIPlugin } from '@univerjs/docs-ui'
-import { UniverDrawingPlugin } from '@univerjs/drawing'
-import { UniverDrawingUIPlugin } from '@univerjs/drawing-ui'
 import { UniverFormulaEnginePlugin } from '@univerjs/engine-formula'
 import { UniverRenderEnginePlugin } from '@univerjs/engine-render'
 import { FUniver } from '@univerjs/facade'
-import { UniverFindReplacePlugin } from '@univerjs/find-replace'
 import { UniverSheetsPlugin } from '@univerjs/sheets'
 import { UniverSheetsConditionalFormattingPlugin } from '@univerjs/sheets-conditional-formatting'
-import { UniverSheetsConditionalFormattingUIPlugin } from '@univerjs/sheets-conditional-formatting-ui'
-import { UniverSheetsCrosshairHighlightPlugin } from '@univerjs/sheets-crosshair-highlight'
 import { UniverSheetsDataValidationPlugin } from '@univerjs/sheets-data-validation'
-import { UniverSheetsDrawingPlugin } from '@univerjs/sheets-drawing'
-import { UniverSheetsDrawingUIPlugin } from '@univerjs/sheets-drawing-ui'
 import { UniverSheetsFilterPlugin } from '@univerjs/sheets-filter'
-import { UniverSheetsFilterUIPlugin } from '@univerjs/sheets-filter-ui'
-import { UniverSheetsFindReplacePlugin } from '@univerjs/sheets-find-replace'
 import { UniverSheetsFormulaPlugin } from '@univerjs/sheets-formula'
 import { UniverSheetsFormulaUIPlugin } from '@univerjs/sheets-formula-ui'
 import { UniverSheetsHyperLinkPlugin } from '@univerjs/sheets-hyper-link'
-import { UniverSheetsHyperLinkUIPlugin } from '@univerjs/sheets-hyper-link-ui'
 import { UniverSheetsNumfmtPlugin } from '@univerjs/sheets-numfmt'
 import { UniverSheetsSortPlugin } from '@univerjs/sheets-sort'
-import { UniverSheetsSortUIPlugin } from '@univerjs/sheets-sort-ui'
 import { UniverSheetsThreadCommentPlugin } from '@univerjs/sheets-thread-comment'
 import { UniverSheetsUIPlugin } from '@univerjs/sheets-ui'
 import { UniverSheetsZenEditorPlugin } from '@univerjs/sheets-zen-editor'
 import { IThreadCommentMentionDataService, UniverThreadCommentUIPlugin } from '@univerjs/thread-comment-ui'
 import { UniverUIPlugin } from '@univerjs/ui'
 import { CustomMentionDataService, mockUser } from './customMentionDataService'
+
+const LOAD_LAZY_PLUGINS_TIMEOUT = 1_000
+const LOAD_VERY_LAZY_PLUGINS_TIMEOUT = 3_000
 
 export function sheetInit(option: IUniverUIConfig) {
   const univer = new Univer({
@@ -50,60 +41,47 @@ export function sheetInit(option: IUniverUIConfig) {
   // register the sheets, if no webworker, then set notExecuteFormula to false
   univer.registerPlugin(UniverSheetsPlugin, { notExecuteFormula: false })
   univer.registerPlugin(UniverSheetsUIPlugin)
-
-  // sheet feature plugins
+  //
   univer.registerPlugin(UniverSheetsNumfmtPlugin)
+  // zen model
+  univer.registerPlugin(UniverSheetsZenEditorPlugin)
+  // formula
   univer.registerPlugin(UniverFormulaEnginePlugin, { notExecuteFormula: false })
   univer.registerPlugin(UniverSheetsFormulaPlugin, { notExecuteFormula: false })
   univer.registerPlugin(UniverSheetsFormulaUIPlugin)
-
-  // zen model editor
-  univer.registerPlugin(UniverSheetsZenEditorPlugin)
-
-  // find replace
-  univer.registerPlugin(UniverSheetsFindReplacePlugin)
-  univer.registerPlugin(UniverFindReplacePlugin)
-
-  // float image
-  univer.registerPlugin(UniverDrawingPlugin)
-  univer.registerPlugin(UniverDrawingUIPlugin)
-  univer.registerPlugin(UniverSheetsDrawingPlugin)
-  univer.registerPlugin(UniverSheetsDrawingUIPlugin)
-
-  // filter plugin
+  // data validation
+  univer.registerPlugin(UniverSheetsDataValidationPlugin)
+  // sheets condition
+  univer.registerPlugin(UniverSheetsConditionalFormattingPlugin)
+  // filter
   univer.registerPlugin(UniverSheetsFilterPlugin)
-  univer.registerPlugin(UniverSheetsFilterUIPlugin)
-  // mock lazy load
-  setTimeout(() => {
-  // hyperlink
-    univer.registerPlugin(UniverSheetsHyperLinkPlugin)
-    univer.registerPlugin(UniverSheetsHyperLinkUIPlugin)
-  }, 500)
-
-  // mock lazy load data validation
-  setTimeout(() => {
-    univer.registerPlugin(UniverDataValidationPlugin)
-    univer.registerPlugin(UniverSheetsDataValidationPlugin)
-  }, 500)
-
   // sort
   univer.registerPlugin(UniverSheetsSortPlugin)
-  univer.registerPlugin(UniverSheetsSortUIPlugin)
-
-  // condition formatting
-  univer.registerPlugin(UniverSheetsConditionalFormattingPlugin)
-  univer.registerPlugin(UniverSheetsConditionalFormattingUIPlugin)
-
-  // highlight
-  univer.registerPlugin(UniverSheetsCrosshairHighlightPlugin)
-
+  // hyper link
+  univer.registerPlugin(UniverSheetsHyperLinkPlugin)
   // comment
-  univer.registerPlugin(UniverThreadCommentUIPlugin, { overrides: [[IThreadCommentMentionDataService, { useClass: CustomMentionDataService }]] })
+  univer.registerPlugin(UniverThreadCommentUIPlugin, {
+    overrides: [[IThreadCommentMentionDataService, { useClass: CustomMentionDataService }]],
+  })
   univer.registerPlugin(UniverSheetsThreadCommentPlugin)
 
   const injector = univer.__getInjector()
   const userManagerService = injector.get(UserManagerService)
   userManagerService.setCurrentUser(mockUser)
+
+  setTimeout(() => {
+    import('./lazy').then((lazy) => {
+      const plugins = lazy.default()
+      plugins.forEach(p => univer.registerPlugin(p[0], p[1]))
+    })
+  }, LOAD_LAZY_PLUGINS_TIMEOUT)
+
+  setTimeout(() => {
+    import('./very-lazy').then((lazy) => {
+      const plugins = lazy.default()
+      plugins.forEach(p => univer.registerPlugin(p[0], p[1]))
+    })
+  }, LOAD_VERY_LAZY_PLUGINS_TIMEOUT)
 
   window.uSheetAPI = FUniver.newAPI(univer)
 
