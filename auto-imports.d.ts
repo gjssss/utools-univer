@@ -95,6 +95,7 @@ declare global {
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
   const renameFile: typeof import('./src/composables/file')['renameFile']
   const resolveComponent: typeof import('vue')['resolveComponent']
+  const resolveFilePayload: typeof import('./src/utils/resolvePayload')['resolveFilePayload']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
   const setFile: typeof import('./src/utils/file')['setFile']
@@ -405,6 +406,7 @@ declare module 'vue' {
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
+    readonly resolveFilePayload: UnwrapRef<typeof import('./src/utils/resolvePayload')['resolveFilePayload']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
     readonly setFile: UnwrapRef<typeof import('./src/utils/file')['setFile']>

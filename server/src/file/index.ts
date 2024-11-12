@@ -1,5 +1,5 @@
-import { helloFile } from './function'
+import { resolveFile } from './resolve'
 
 export default {
-  helloFile,
+  resolveFile,
 }
