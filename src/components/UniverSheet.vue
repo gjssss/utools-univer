@@ -34,9 +34,10 @@ onMounted(() => {
     immediate: true,
   })
 
-  onUnmounted(() => {
+  onUnmounted(async () => {
     closeWatch()
     if (univerAPI && workbook) {
+      await setFile(props.id, workbook.save())
       const unitId = workbook.getId()
       if (unitId)
         univerAPI.disposeUnit(unitId)
