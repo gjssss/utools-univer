@@ -1,11 +1,13 @@
 {
   "name": "server",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/node": "^22.9.0",
     "vite": "^5.4.10",
     "vite-plugin-dts": "^4.3.0"
   }

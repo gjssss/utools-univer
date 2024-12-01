@@ -9,11 +9,21 @@
   "logo": "logo.jpg",
   "features": [
     {
-      "code": "univer",
-      "explain": "start univer",
+      "code": "start new window",
+      "explain": "启动超级表格",
       "cmds": [
         "univer",
-        "sheet"
+        "sheet",
+        "表格",
+        "超级表格",
+        {
+          "type": "files",
+          "label": "使用超级表格打开",
+          "fileType": "file",
+          "match": "/.+.usheet/",
+          "minLength": 1,
+          "maxLength": 1
+        }
       ]
     }
   ]

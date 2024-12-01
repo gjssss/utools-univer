@@ -14,13 +14,29 @@ function addFooter(footerText: string) {
     },
   }
 }
+function addBanner(bannerText: string) {
+  return {
+    name: 'add-footer',
+    generateBundle(_: any, bundle: any) {
+      for (const file of Object.values<any>(bundle)) {
+        if (file.type === 'chunk' && file.preliminaryFileName === 'main.js') {
+          file.code = `${bannerText}\n${file.code}`
+        }
+      }
+    },
+  }
+}
 
 export default defineConfig({
   plugins: [
+    addBanner(
+      `
+        var fs = require('fs')
+      `,
+    ),
     addFooter('window.server = server\n'),
     dts({
       outDir: 'dist/types', // 类型文件输出路径
-      include: 'src/**/*.ts',
       insertTypesEntry: true, // 生成类型入口文件
     }),
   ],
