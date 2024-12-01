@@ -15,13 +15,26 @@ import { UniverSheetsFormulaPlugin } from '@univerjs/sheets-formula'
 import { UniverSheetsFormulaUIPlugin } from '@univerjs/sheets-formula-ui'
 import { UniverSheetsHyperLinkPlugin } from '@univerjs/sheets-hyper-link'
 import { UniverSheetsNumfmtPlugin } from '@univerjs/sheets-numfmt'
+import { UniverSheetsNumfmtUIPlugin } from '@univerjs/sheets-numfmt-ui'
 import { UniverSheetsSortPlugin } from '@univerjs/sheets-sort'
 import { UniverSheetsThreadCommentPlugin } from '@univerjs/sheets-thread-comment'
 import { UniverSheetsUIPlugin } from '@univerjs/sheets-ui'
 import { UniverSheetsZenEditorPlugin } from '@univerjs/sheets-zen-editor'
-import { IThreadCommentMentionDataService, UniverThreadCommentUIPlugin } from '@univerjs/thread-comment-ui'
+import { UniverThreadCommentUIPlugin } from '@univerjs/thread-comment-ui'
 import { UniverUIPlugin } from '@univerjs/ui'
-import { CustomMentionDataService, mockUser } from './customMentionDataService'
+import { mockUser } from './customMentionDataService'
+
+import '@univerjs/sheets/facade'
+import '@univerjs/ui/facade'
+import '@univerjs/docs-ui/facade'
+import '@univerjs/sheets-ui/facade'
+import '@univerjs/sheets-data-validation/facade'
+import '@univerjs/engine-formula/facade'
+import '@univerjs/sheets-filter/facade'
+import '@univerjs/sheets-formula/facade'
+import '@univerjs/sheets-numfmt/facade'
+import '@univerjs/sheets-hyper-link-ui/facade'
+import '@univerjs/sheets-thread-comment/facade'
 
 const LOAD_LAZY_PLUGINS_TIMEOUT = 1_000
 const LOAD_VERY_LAZY_PLUGINS_TIMEOUT = 3_000
@@ -47,6 +60,7 @@ export function sheetInit(option: IUniverUIConfig) {
   univer.registerPlugin(UniverSheetsZenEditorPlugin)
   // formula
   univer.registerPlugin(UniverFormulaEnginePlugin, { notExecuteFormula: false })
+  univer.registerPlugin(UniverSheetsNumfmtUIPlugin)
   univer.registerPlugin(UniverSheetsFormulaPlugin, { notExecuteFormula: false })
   univer.registerPlugin(UniverSheetsFormulaUIPlugin)
   // data validation
@@ -60,9 +74,7 @@ export function sheetInit(option: IUniverUIConfig) {
   // hyper link
   univer.registerPlugin(UniverSheetsHyperLinkPlugin)
   // comment
-  univer.registerPlugin(UniverThreadCommentUIPlugin, {
-    overrides: [[IThreadCommentMentionDataService, { useClass: CustomMentionDataService }]],
-  })
+  univer.registerPlugin(UniverThreadCommentUIPlugin)
   univer.registerPlugin(UniverSheetsThreadCommentPlugin)
 
   const injector = univer.__getInjector()
